@@ -1,22 +1,20 @@
 {
-  description = "Development environment in a flake.nix file for Nix users";
-
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
   };
 
-    outputs = { self, nixpkgs }:
-      let
-        system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        devShells.${system}.default =
-          pkgs.mkShell
-            {
-              buildInputs = [
-                pkgs.nodejs
-              ];
-            };
-      };
-  }
+  outputs = { self, nixpkgs }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      devShells.${system}.default =
+        pkgs.mkShell
+          {
+            buildInputs = [
+              pkgs.nodejs_latest
+            ];
+          };
+    };
+}
