@@ -1,44 +1,125 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts"
-import BaseHead from "../components/BaseHead.astro";
-import {
-	siDiscord,
-	siFirefish,
-	siGithub,
-	siMatrix,
-	siMisskey
-} from "simple-icons";
+import favicon from "../components/favicon.png?url"
+import BaseHead from "../components/BaseHead.astro"
+
+import { siDiscord, siFirefish, siGithub, siMatrix, siMisskey, siSteam } from "simple-icons"
 const socials = [
+	// list of socials to load on the site with info about them!
 	{
 		icon: siDiscord,
 		href: "https://discord.com/users/1158065452375867435",
-		text: "@unlinkability"
+		text: "@unlinkability",
+	},
+	{
+		icon: siSteam,
+		href: "https://steamcommunity.com/id/unlinkability",
+		text: "unlinkability",
 	},
 	{
 		icon: siGithub,
 		href: "https://github.com/linkability",
-		text: "@linkability"
+		text: "@linkability",
 	},
 	{
 		icon: siMatrix,
 		href: "https://matrix.to/#/@unlinkability:matrix.org",
-		text: "@unlinkability:matrix.org"
+		text: "@unlinkability:matrix.org",
 	},
 	{
 		icon: siMisskey,
 		href: "https://owo.community/@c",
-		text: "@c@owo.community"
+		text: "@c@owo.community",
 	},
 	{
 		icon: siFirefish,
 		href: "https://coolviruses.download/@c",
-		text: "@c@coolviruses.download"
-	}
+		text: "@c@coolviruses.download",
+	},
 ]
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			ul {
+				list-style-type: none;
+				padding: unset;
+			}
+			ul li {
+				display: flex;
+			}
+			ul li :global(time) {
+				flex: 0 0 148px;
+				font-style: italic;
+				color: GrayText;
+			}
+			ul li a {
+				flex: 1;
+			}
+			.p-name {
+				text-decoration: none;
+				color: inherit;
+				display: flex;
+				flex-direction: row;
+				gap: 0.5ch;
+				font-size: calc(min(32px, 4vw));
+			}
+			dl a {
+				display: flex;
+				gap: 1ch;
+				text-decoration: none;
+				fill: currentColor;
+				font-weight: bold;
+			}
+			dl a:hover {
+				text-decoration: underline;
+			}
+			dd {
+				margin-inline-start: 0;
+			}
+			dl :global(svg) {
+				height: 24px;
+			}
+			dl {
+				margin-block-end: 0;
+			}
+			h1 {
+				display: flex;
+				align-items: center;
+				gap: 0.5ch;
+				margin: 0;
+			}
+		</style>
 	</head>
+
+	<body>
+		<header class="h-card">
+			<h1 role="none" aria-label="Unlinkability">
+				<img
+					src={favicon}
+					alt="Two paperclips linked together."
+					class="u-photo"
+					height="48px"
+					width="48px"
+				/>
+				<a href="/" role="heading" class="p-name u-url u-uid">Unlinkability</a>
+			</h1>
+			<p class="p-note">
+				Insane programmer from Britain.
+			</p>
+
+			<dl>
+				{
+					socials.map(social => (
+						<a href={social.href} rel="me" title={social.icon.title}>
+							<dt set:html={social.icon.svg} aria-label={social.icon.title} />
+							<dd>{social.text}</dd>
+						</a>
+					))
+				}
+			</dl>
+		</header>
+	</body>
 </html>
